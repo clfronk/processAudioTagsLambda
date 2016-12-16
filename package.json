@@ -1,0 +1,21 @@
+{
+  "name": "new-audio-s3-trigger",
+  "version": "1.0.0",
+  "description": "A lambda handler to transcode and parse id3 data of new audio files in S3.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "s3",
+    "aws",
+    "transcoding"
+  ],
+  "author": "Chris Fronk",
+  "license": "See license in LICENSE.txt",
+  "dependencies": {
+    "id3-parser": "^1.0.3",
+    "stream-transcoder": "0.0.5",
+    "transcoding": "^0.0.1"
+  }
+}
