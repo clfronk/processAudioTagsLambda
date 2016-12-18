@@ -58,6 +58,9 @@ exports.handler = function(event, context, callback){
                 "artist": artist,
                 "album": album,
                 "trackNumber": trackNum,
+                "ui_title": tag.title,
+                "ui_artist": tag.artist,
+                "ui_album": tag.album,
                 "url": s3url
             }
         };
@@ -75,9 +78,11 @@ exports.handler = function(event, context, callback){
                 "album": album,
                 "artist": artist
             },
-            UpdateExpression: "SET tracks = list_append( if_not_exists(tracks, :empty_list), :i)",
+            UpdateExpression: "SET ui_artist = :uiartist, ui_album = :uialbum, tracks = list_append( if_not_exists(tracks, :empty_list), :i)",
             ExpressionAttributeValues: {
-                ":i": [ { title: title, trackNumber: trackNum, url: s3url } ],
+                ":uiartist": tag.artist,
+                ":uialbum": tag.album,
+                ":i": [ { title: title, ui_title: tag.title, trackNumber: trackNum, url: s3url } ],
                 ":empty_list": []
             }
         };
@@ -96,6 +101,9 @@ exports.handler = function(event, context, callback){
                 "artist": artist,
                 "title": title,
                 "album": album,
+                "ui_artist": tag.artist,
+                "ui_album": tag.album,
+                "ui_title": tag.title,
                 "trackNumber": trackNum,
                 "url": s3url
             }
