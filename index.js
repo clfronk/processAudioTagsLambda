@@ -12,6 +12,26 @@ function preprocessName(origName)
 {
     var processedName = "";
     origName = origName.toLowerCase();
+    
+    console.log("Name is " + origName);
+    
+    if (origName.match(/^the\s/))
+    {
+        origName = origName.substring(3);
+    }
+    
+    // Replace ampersand with 'and' and numbers with spellings
+    origName = origName.replace( /\s&\s/g, "and" );
+    
+    console.log("After replace name is " + origName);
+    origName = origName.replace( /^first|\sfirst/g, "1st" );
+    origName = origName.replace( /^third|\sthird/g, "3rd" );
+    origName = origName.replace( /^fourth|\sfourth/g, "4th" );
+    origName = origName.replace( /^fifth|\sfifth/g, "5th" );
+    origName = origName.replace( /^sixth|\ssixth/g, "6th" );
+    origName = origName.replace( /^seventh|\sseventh/g, "7th" );
+    origName = origName.replace( /^eighth|\seighth/g, "8th" );    
+    
     for ( var i = 0; i < origName.length; i++ )
     {
         var charStr = origName.charAt(i);
@@ -34,7 +54,7 @@ exports.handler = function(event, context, callback){
       
     var srcBucket = event.Records[0].s3.bucket.name;
     var srcKey = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
-    var s3url = "https://s3.amazonaws.com/" + srcBucket + "/" + event.Records[0].s3.object.key.replace(' ', '+');
+    var s3url = "https://s3.amazonaws.com/" + srcBucket + "/" + event.Records[0].s3.object.key.replace(/\s/g, '+');
 
     S3.getObject( { 
                     Bucket: srcBucket,
